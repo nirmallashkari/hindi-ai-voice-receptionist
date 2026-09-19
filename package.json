@@ -1,0 +1,22 @@
+{
+  "name": "lashkari-properties-voice",
+  "version": "1.0.0",
+  "description": "Hindi AI voice receptionist + lead CRM for Lashkari Properties",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "demo": "node src/demoCall.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "twilio": "^5.4.0",
+    "uuid": "^11.0.5",
+    "ws": "^8.21.1"
+  }
+}

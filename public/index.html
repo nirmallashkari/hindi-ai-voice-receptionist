@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lashkari Properties — AI Voice Leads</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div>
+        <h1>Lashkari Properties</h1>
+        <p class="sub">Hindi AI Voice Receptionist · Priya · +91 9993320540</p>
+      </div>
+      <div class="auth-box">
+        <input id="password" type="password" placeholder="Dashboard password" />
+        <button id="btnLogin" class="btn primary">Login</button>
+      </div>
+    </header>
+
+    <section class="stats" id="stats">
+      <div class="card"><span class="label">Total leads</span><strong id="statTotal">—</strong></div>
+      <div class="card"><span class="label">Aaj</span><strong id="statToday">—</strong></div>
+      <div class="card"><span class="label">Kharidna</span><strong id="statBuy">—</strong></div>
+      <div class="card"><span class="label">Kiraya</span><strong id="statRent">—</strong></div>
+      <div class="card"><span class="label">Bechna</span><strong id="statSell">—</strong></div>
+    </section>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="leads">Leads</button>
+      <button class="tab" data-tab="outbound">Outbound Call</button>
+      <button class="tab" data-tab="demo">Demo Call (Text)</button>
+      <button class="tab" data-tab="setup">Phone Setup</button>
+    </nav>
+
+    <main>
+      <section id="tab-leads" class="panel active">
+        <div class="toolbar">
+          <input id="search" placeholder="Search name / phone / location..." />
+          <select id="filterIntent">
+            <option value="">All intents</option>
+            <option value="kharidna">Kharidna</option>
+            <option value="kiraya">Kiraya</option>
+            <option value="bechna">Bechna</option>
+            <option value="anya">Anya</option>
+          </select>
+          <select id="filterStatus">
+            <option value="">All status</option>
+            <option value="new">New</option>
+            <option value="in_progress">In progress</option>
+            <option value="contacted">Contacted</option>
+            <option value="closed">Closed</option>
+            <option value="incomplete">Incomplete</option>
+          </select>
+          <button id="btnRefresh" class="btn">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Intent</th>
+                <th>Location</th>
+                <th>Budget / Price</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="leadsBody"></tbody>
+          </table>
+        </div>
+        <div id="leadDetail" class="detail hidden"></div>
+      </section>
+
+      <section id="tab-outbound" class="panel">
+        <h2 style="margin-top:0">Outbound Call — India / USA</h2>
+        <p class="hint">
+          Default script (GD Digital Indore · Rekha · soft):
+          <strong>Hello, GD Digital Indore se Rekha bol rahi hoon. Abhi ek mahina free social media handling ka offer chal raha hai — kya chhoti si baat ho sakti hai?</strong>
+        </p>
+        <div class="toolbar" style="flex-direction:column;align-items:stretch">
+          <label class="hint">Region</label>
+          <select id="outRegion">
+            <option value="US">USA — Twilio (+1 number se)</option>
+            <option value="IN">India — Exotel (fail pe Twilio fallback)</option>
+          </select>
+          <label class="hint">Script</label>
+          <select id="outScript">
+            <option value="gd_rekha">GD Digital Indore — Rekha (soft offer)</option>
+            <option value="lashkari_priya">Lashkari — Priya</option>
+          </select>
+          <label class="hint">Jis number pe call jaye</label>
+          <input id="outTo" placeholder="+919993320540 ya US +1..." value="+919993320540" />
+          <label class="hint">Custom message (optional — khali = script upar se)</label>
+          <input id="outMsg" placeholder="Custom Hindi line..." />
+          <button id="btnOutbound" class="btn primary">Call abhi karo</button>
+        </div>
+        <pre id="outResult" class="detail" style="white-space:pre-wrap;min-height:80px"></pre>
+        <div class="hint" id="outStatusHint"></div>
+      </section>
+
+      <section id="tab-demo" class="panel">
+        <p class="hint">Phone ke bina flow test karein. Priya Hindi me baat karegi (text).</p>
+        <div class="chat" id="chat"></div>
+        <div class="chat-input">
+          <button id="btnStartDemo" class="btn primary">Nayi Demo Call</button>
+          <input id="demoText" placeholder="Customer bole... jaise: mujhe 2 BHK kiraye pe chahiye" />
+          <button id="btnSendDemo" class="btn">Bhejo</button>
+        </div>
+      </section>
+
+      <section id="tab-setup" class="panel">
+        <div class="setup">
+          <h2>Real phone calls ke liye</h2>
+          <ol>
+            <li>Yeh server chalu rakho: <code>npm start</code></li>
+            <li>Public URL banao (ngrok): <code>ngrok http 5050</code></li>
+            <li><code>.env</code> me <code>PUBLIC_BASE_URL</code> set karo</li>
+            <li>Twilio console me phone number ke Voice webhook:
+              <ul>
+                <li>A call comes in → <code>POST {PUBLIC_BASE_URL}/voice/incoming</code></li>
+              </ul>
+            </li>
+            <li>Business number: <strong>+91 9993320540</strong> (client) — isko Twilio/Exotel pe forward ya replace kar sakte ho</li>
+          </ol>
+          <h3>Greeting</h3>
+          <blockquote>
+            नमस्ते, मैं प्रिया, Lashkari Properties से बोल रही हूँ। आपकी कैसे सहायता कर सकती हूँ?
+          </blockquote>
+          <h3>Data jo collect hota hai</h3>
+          <ul>
+            <li><strong>Kharidna / Kiraya:</strong> naam, location, budget, size (BHK), property type, notes</li>
+            <li><strong>Bechna:</strong> naam, address, built area, age, facing/disha, sale price, expected rent, type, notes</li>
+          </ul>
+          <p class="hint">Default dashboard password: dekh lo <code>.env</code> → <code>DASHBOARD_PASSWORD</code></p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

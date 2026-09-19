@@ -1,0 +1,62 @@
+{
+  "agent_config": {
+    "agent_name": "GD Digital Rekha Soft",
+    "agent_welcome_message": "Hello, GD Digital Indore se Rekha bol rahi hoon. Abhi ek mahina free social media handling ka offer chal raha hai — kya chhoti si baat ho sakti hai?",
+    "tasks": [
+      {
+        "task_type": "conversation",
+        "toolchain": {
+          "execution": "sequential",
+          "pipelines": [["transcriber", "llm", "synthesizer"]]
+        },
+        "tools_config": {
+          "llm_agent": {
+            "agent_type": "simple_llm_agent",
+            "agent_flow_type": "streaming",
+            "llm_config": {
+              "provider": "openai",
+              "model": "gpt-4.1-mini",
+              "max_tokens": 100,
+              "temperature": 0.4
+            }
+          },
+          "synthesizer": {
+            "provider": "sarvam",
+            "provider_config": {
+              "voice": "manisha",
+              "voice_id": "manisha",
+              "model": "bulbul:v2",
+              "language": "hi-IN",
+              "pace": 0.9
+            },
+            "stream": true,
+            "buffer_size": 350,
+            "audio_format": "wav"
+          },
+          "transcriber": {
+            "provider": "deepgram",
+            "model": "nova-3",
+            "language": "hi",
+            "stream": true,
+            "encoding": "linear16",
+            "sampling_rate": 16000,
+            "endpointing": 300
+          },
+          "input": { "provider": "plivo", "format": "wav" },
+          "output": { "provider": "plivo", "format": "wav" }
+        },
+        "task_config": {
+          "call_terminate": 120,
+          "hangup_after_silence": 12,
+          "number_of_words_for_interruption": 2,
+          "incremental_delay": 600
+        }
+      }
+    ]
+  },
+  "agent_prompts": {
+    "task_1": {
+      "system_prompt": "You are Rekha calling from GD Digital Indore. Talk like a real soft-spoken Indian woman on phone — calm, warm Hinglish, not robotic. Max 1-2 short sentences. Never list things like a robot. Offer: 1 month free social media handling. If yes ask WhatsApp or time. If no, thank and end. Sound human: use ji, bilkul, theek hai naturally."
+    }
+  }
+}

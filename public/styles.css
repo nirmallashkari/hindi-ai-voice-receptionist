@@ -1,0 +1,104 @@
+:root {
+  --bg: #0f1419;
+  --panel: #1a2332;
+  --card: #243044;
+  --text: #e8eef7;
+  --muted: #8b9bb4;
+  --accent: #c9a227;
+  --accent2: #3d8bfd;
+  --ok: #3dd68c;
+  --border: #2e3b4f;
+  --danger: #ff6b6b;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 10% -10%, #1e2a3d, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+}
+.app { max-width: 1200px; margin: 0 auto; padding: 20px; }
+.top {
+  display: flex; justify-content: space-between; gap: 16px; align-items: flex-start;
+  flex-wrap: wrap; margin-bottom: 18px;
+}
+h1 { margin: 0 0 4px; font-size: 1.6rem; letter-spacing: 0.02em; }
+.sub { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.auth-box { display: flex; gap: 8px; align-items: center; }
+input, select, button, textarea {
+  font: inherit; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--panel); color: var(--text); padding: 10px 12px;
+}
+input:focus, select:focus { outline: 2px solid #3d8bfd55; border-color: var(--accent2); }
+.btn {
+  cursor: pointer; background: var(--card); border: 1px solid var(--border);
+  transition: 0.15s ease;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn.primary { background: linear-gradient(135deg, #b8921e, #e0c15a); color: #1a1405; border: none; font-weight: 600; }
+
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px; margin-bottom: 16px;
+}
+.card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+  padding: 14px;
+}
+.card .label { display: block; color: var(--muted); font-size: 0.8rem; margin-bottom: 6px; }
+.card strong { font-size: 1.4rem; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tab {
+  background: transparent; border: 1px solid var(--border); color: var(--muted);
+  padding: 8px 14px; border-radius: 999px; cursor: pointer;
+}
+.tab.active { background: var(--card); color: var(--text); border-color: var(--accent); }
+
+.panel { display: none; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
+.panel.active { display: block; }
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.toolbar input { flex: 1; min-width: 180px; }
+.table-wrap { overflow: auto; border-radius: 12px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: #152033; color: var(--muted); font-weight: 600; position: sticky; top: 0; }
+tr:hover td { background: #1f2b3d; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;
+  background: #2a3a52; color: var(--text);
+}
+.badge.kharidna { background: #1f3d2f; color: var(--ok); }
+.badge.kiraya { background: #1f3350; color: #7eb6ff; }
+.badge.bechna { background: #3d2f1a; color: #f0c674; }
+.linkish { background: none; border: none; color: var(--accent2); cursor: pointer; text-decoration: underline; padding: 0; }
+
+.detail {
+  margin-top: 14px; background: var(--card); border-radius: 12px; padding: 14px;
+  border: 1px solid var(--border);
+}
+.detail.hidden { display: none; }
+.detail h3 { margin-top: 0; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px 16px; }
+.kv { color: var(--muted); font-size: 0.85rem; }
+.kv b { display: block; color: var(--text); font-size: 0.95rem; margin-top: 2px; }
+.events { margin-top: 12px; max-height: 220px; overflow: auto; font-size: 0.85rem; }
+.events div { padding: 6px 0; border-bottom: 1px dashed var(--border); }
+
+.chat {
+  min-height: 320px; max-height: 480px; overflow: auto; background: #121a26;
+  border-radius: 12px; padding: 14px; border: 1px solid var(--border); margin-bottom: 10px;
+}
+.bubble { max-width: 85%; margin: 8px 0; padding: 10px 12px; border-radius: 12px; line-height: 1.4; }
+.bubble.bot { background: #24344d; }
+.bubble.user { background: #3a2f14; margin-left: auto; }
+.chat-input { display: flex; gap: 8px; flex-wrap: wrap; }
+.chat-input input { flex: 1; min-width: 200px; }
+.hint { color: var(--muted); }
+.setup code { background: #0d1320; padding: 2px 6px; border-radius: 6px; }
+.setup blockquote {
+  background: #121a26; border-left: 4px solid var(--accent); margin: 12px 0; padding: 12px 14px;
+}
+.hidden { display: none !important; }

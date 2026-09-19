@@ -1,0 +1,62 @@
+{
+  "agent_config": {
+    "agent_name": "GD Digital Rekha Soft",
+    "agent_welcome_message": "Hello, GD Digital Indore se Rekha bol rahi hoon. Abhi ek mahina free social media handling ka offer chal raha hai — kya chhoti si baat ho sakti hai?",
+    "tasks": [
+      {
+        "task_type": "conversation",
+        "toolchain": {
+          "execution": "sequential",
+          "pipelines": [["transcriber", "llm", "synthesizer"]]
+        },
+        "tools_config": {
+          "llm_agent": {
+            "agent_type": "simple_llm_agent",
+            "agent_flow_type": "streaming",
+            "llm_config": {
+              "provider": "openai",
+              "model": "gpt-4.1-mini",
+              "max_tokens": 120,
+              "temperature": 0.35
+            }
+          },
+          "synthesizer": {
+            "provider": "sarvam",
+            "provider_config": {
+              "voice": "anushka",
+              "voice_id": "anushka",
+              "model": "bulbul:v2",
+              "language": "hi-IN",
+              "pace": 0.95
+            },
+            "stream": true,
+            "buffer_size": 250,
+            "audio_format": "wav"
+          },
+          "transcriber": {
+            "provider": "deepgram",
+            "model": "nova-3",
+            "language": "hi",
+            "stream": true,
+            "encoding": "linear16",
+            "sampling_rate": 16000,
+            "endpointing": 280
+          },
+          "input": { "provider": "plivo", "format": "wav" },
+          "output": { "provider": "plivo", "format": "wav" }
+        },
+        "task_config": {
+          "call_terminate": 120,
+          "hangup_after_silence": 12,
+          "number_of_words_for_interruption": 2,
+          "incremental_delay": 500
+        }
+      }
+    ]
+  },
+  "agent_prompts": {
+    "task_1": {
+      "system_prompt": "You are Rekha from GD Digital Indore. Speak natural soft Hinglish like a real Indian sales girl on phone — warm, calm, not robotic. Use short lines (1-2 sentences). Prefer simple words. Opening offer: 1 month FREE social media handling. If interested, ask WhatsApp or best callback time. If not interested, thank politely and end. Never invent prices. Sound human: light fillers ok like 'ji', 'theek hai', 'bilkul'."
+    }
+  }
+}

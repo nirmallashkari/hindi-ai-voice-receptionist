@@ -1,0 +1,58 @@
+{
+  "agent_config": {
+    "agent_name": "GD Digital Rekha Soft",
+    "agent_welcome_message": "Hello, GD Digital Indore se Rekha bol rahi hoon. Abhi ek mahina free social media handling ka offer chal raha hai — kya chhoti si baat ho sakti hai?",
+    "tasks": [
+      {
+        "task_type": "conversation",
+        "toolchain": {
+          "execution": "sequential",
+          "pipelines": [["transcriber", "llm", "synthesizer"]]
+        },
+        "tools_config": {
+          "llm_agent": {
+            "agent_type": "simple_llm_agent",
+            "agent_flow_type": "streaming",
+            "llm_config": {
+              "provider": "openai",
+              "model": "gpt-4.1-mini",
+              "max_tokens": 150,
+              "temperature": 0.3
+            }
+          },
+          "synthesizer": {
+            "provider": "elevenlabs",
+            "provider_config": {
+              "voice": "Nila",
+              "voice_id": "V9LCAAi4tTlqe9JadbCo",
+              "model": "eleven_turbo_v2_5"
+            },
+            "stream": true,
+            "buffer_size": 250,
+            "audio_format": "wav"
+          },
+          "transcriber": {
+            "provider": "deepgram",
+            "model": "nova-3",
+            "language": "hi",
+            "stream": true,
+            "encoding": "linear16",
+            "sampling_rate": 16000,
+            "endpointing": 250
+          },
+          "input": { "provider": "plivo", "format": "wav" },
+          "output": { "provider": "plivo", "format": "wav" }
+        },
+        "task_config": {
+          "call_terminate": 120,
+          "hangup_after_silence": 12
+        }
+      }
+    ]
+  },
+  "agent_prompts": {
+    "task_1": {
+      "system_prompt": "You are Rekha from GD Digital Indore. Speak simple Hinglish, soft and friendly, under 2 short sentences. Offer 1 month FREE social media handling. If yes, ask WhatsApp number/time. If no, thank and end. Do not invent prices."
+    }
+  }
+}

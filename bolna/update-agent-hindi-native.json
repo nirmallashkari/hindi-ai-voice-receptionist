@@ -1,0 +1,62 @@
+{
+  "agent_config": {
+    "agent_name": "GD Digital Rekha Soft",
+    "agent_welcome_message": "नमस्ते, जी डी डिजिटल इंदौर से मैं रेखा बोल रही हूँ। अभी एक महीना फ्री सोशल मीडिया हैंडलिंग का ऑफर चल रहा है — क्या छोटी सी बात हो सकती है?",
+    "tasks": [
+      {
+        "task_type": "conversation",
+        "toolchain": {
+          "execution": "sequential",
+          "pipelines": [["transcriber", "llm", "synthesizer"]]
+        },
+        "tools_config": {
+          "llm_agent": {
+            "agent_type": "simple_llm_agent",
+            "agent_flow_type": "streaming",
+            "llm_config": {
+              "provider": "openai",
+              "model": "gpt-4.1-mini",
+              "max_tokens": 100,
+              "temperature": 0.35
+            }
+          },
+          "synthesizer": {
+            "provider": "sarvam",
+            "provider_config": {
+              "voice": "manisha",
+              "voice_id": "manisha",
+              "model": "bulbul:v2",
+              "language": "hi-IN",
+              "pace": 0.92
+            },
+            "stream": true,
+            "buffer_size": 350,
+            "audio_format": "wav"
+          },
+          "transcriber": {
+            "provider": "deepgram",
+            "model": "nova-3",
+            "language": "hi",
+            "stream": true,
+            "encoding": "linear16",
+            "sampling_rate": 16000,
+            "endpointing": 300
+          },
+          "input": { "provider": "plivo", "format": "wav" },
+          "output": { "provider": "plivo", "format": "wav" }
+        },
+        "task_config": {
+          "call_terminate": 120,
+          "hangup_after_silence": 12,
+          "number_of_words_for_interruption": 2,
+          "incremental_delay": 550
+        }
+      }
+    ]
+  },
+  "agent_prompts": {
+    "task_1": {
+      "system_prompt": "आप रेखा हैं, जी डी डिजिटल इंदौर से। हमेशा शुद्ध सरल हिंदी में बात करें — देवनागरी में सोचें और बोलें। अंग्रेज़ी में पूरा वाक्य मत बोलें; ज़रूरी अंग्रेज़ी शब्द (WhatsApp, social media) ठीक हैं। आवाज़ नरम, विनम्र, छोटी लाइनें (1-2 वाक्य)। रोबोट या लिस्ट जैसा मत बोलें। ऑफर: एक महीना फ्री सोशल मीडिया हैंडलिंग। हाँ कहें तो WhatsApp नंबर या समय पूछें। नहीं कहें तो धन्यवाद कहकर बात खत्म करें। कीमत मत गढ़ें। उदाहरण अंदाज़: 'जी बिलकुल', 'ठीक है', 'बहुत अच्छा'।"
+    }
+  }
+}
